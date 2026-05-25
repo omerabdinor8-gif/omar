@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Entrepreneur Academy @ KLUST</title>
+<meta name="description" content="Shaping Future Digital Business Leaders at Kuala Lumpur University of Science and Technology">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #132040;
+    --navy-light: #1e3260;
+    --gold: #c9a227;
+    --gold-light: #e8bf5a;
+    --gold-pale: #fdf6e3;
+    --white: #ffffff;
+    --gray-100: #f4f6fb;
+    --gray-200: #e8ecf4;
+    --gray-400: #8a94a8;
+    --gray-600: #4a5568;
+    --text: #1a2238;
+    --radius: 12px;
+    --radius-lg: 20px;
+    --shadow: 0 4px 24px rgba(10,22,40,0.10);
+    --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+  /* EDIT BUTTON */
+  .edit-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity var(--transition);
+    white-space: nowrap;
+  }
+  .editable-block:hover .edit-btn,
+  .edit-btn:focus { opacity: 1; }
+  .editable-block { position: relative; }
+
+  /* ADMIN BANNER */
+  #admin-banner {
+    background: var(--navy);
+    color: var(--gold-light);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 16px;
+  }
+  #admin-banner .admin-left { display: flex; align-items: center; gap: 10px; }
+  #admin-banner span { font-weight: 600; letter-spacing: 0.04em; }
+  .admin-toggle {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    border-radius: 5px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  body.admin-off .edit-btn { display: none !important; }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 36px;
+    z-index: 900;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.06);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo .logo-badge {
+    width: 40px; height: 40px;
+    background: var(--navy);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    flex-shrink: 0;
+  }
+  .nav-logo .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .nav-logo .logo-sub { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--gray-400); font-weight: 400; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--gray-600);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 7px;
+    transition: background var(--transition), color var(--transition);
+  }
+  .nav-links a:hover { background: var(--gray-100); color: var(--navy); }
+  .nav-cta {
+    background: var(--navy);
+    color: var(--gold) !important;
+    border-radius: 8px;
+    padding: 8px 18px !important;
+  }
+  .nav-cta:hover { background: var(--navy-light) !important; color: var(--gold-light) !important; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; border-radius: 2px; transition: var(--transition); }
+
+  /* HERO */
+  #hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1a3a6e 100%);
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.6;
+  }
+  .hero-content {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,162,39,0.15);
+    border: 1px solid rgba(201,162,39,0.3);
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .hero-badge::before { content: '◆'; font-size: 8px; }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero-title .gold { color: var(--gold-light); }
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .hero-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 13px 28px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background var(--transition), transform var(--transition);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    padding: 13px 28px;
+    border-radius: 9px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color var(--transition), background var(--transition);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    backdrop-filter: blur(8px);
+    transition: transform var(--transition);
+  }
+  .hero-card:hover { transform: translateX(-4px); }
+  .hero-card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); font-weight: 600; margin-bottom: 6px; }
+  .hero-card-value { font-size: 32px; font-weight: 700; color: var(--white); font-family: 'Playfair Display', serif; }
+  .hero-card-desc { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .hero-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* SECTIONS */
+  section { padding: 80px 24px; }
+  .section-inner { max-width: 1200px; margin: auto; }
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-tag::before { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); border-radius: 2px; }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+  .section-desc {
+    font-size: 16px;
+    color: var(--gray-600);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* STATS */
+  #stats { background: var(--navy); padding: 48px 24px; }
+  .stats-grid {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .stat-item {
+    background: rgba(255,255,255,0.05);
+    padding: 32px 24px;
+    text-align: center;
+    transition: background var(--transition);
+  }
+  .stat-item:hover { background: rgba(201,162,39,0.1); }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+  }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 6px; }
+
+  /* ABOUT */
+  #about { background: var(--gray-100); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .about-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 32px; }
+  .highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .highlight-item:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(201,162,39,0.1); }
+  .highlight-icon {
+    width: 32px; height: 32px;
+    background: var(--gold-pale);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .about-visual {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow);
+  }
+  .about-visual-title { font-size: 14px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px; }
+  .programme-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--navy);
+    margin: 4px;
+    transition: background var(--transition), color var(--transition);
+  }
+  .programme-pill:hover { background: var(--navy); color: var(--white); }
+  .programme-pill .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+  /* WHY CHOOSE */
+  #why { background: var(--white); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .why-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    position: relative;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    overflow: hidden;
+  }
+  .why-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+  .why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+  .why-card:hover::after { transform: scaleX(1); }
+  .why-icon {
+    width: 48px; height: 48px;
+    background: var(--navy);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .why-card h3 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 8px; font-family: 'DM Sans', sans-serif; }
+  .why-card p { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+
+  /* COURSES */
+  #courses { background: var(--navy); }
+  #courses .section-title { color: var(--white); }
+  #courses .section-desc { color: rgba(255,255,255,0.55); }
+  #courses .section-tag { color: var(--gold-light); }
+  #courses .section-tag::before { background: var(--gold-light); }
+  .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .course-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 20px;
+    position: relative;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .course-card:hover { background: rgba(201,162,39,0.1); border-color: rgba(201,162,39,0.3); }
+  .course-num { font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .course-card h3 { font-size: 15px; color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 600; margin-bottom: 6px; }
+  .course-card p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+  .course-actions { display: flex; gap: 8px; margin-top: 32px; flex-wrap: wrap; }
+  .btn-gold-sm {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background var(--transition);
+  }
+  .btn-gold-sm:hover { background: var(--gold-light); }
+  .btn-ghost-sm {
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .btn-ghost-sm:hover { color: var(--white); border-color: rgba(255,255,255,0.5); }
+
+  /* CAREERS */
+  #careers { background: var(--gray-100); }
+  .careers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .career-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .career-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .career-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 14px;
+  }
+  .career-card h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; font-family: 'DM Sans', sans-serif; }
+  .career-card p { font-size: 12px; color: var(--gray-600); }
+  .career-tag {
+    display: inline-block;
+    background: var(--gold-pale);
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--white); }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .testi-card {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    position: relative;
+  }
+  .testi-card::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.3;
+    position: absolute;
+    top: 10px; left: 20px;
+    line-height: 1;
+  }
+  .testi-text { font-size: 14px; color: var(--gray-600); line-height: 1.7; padding-top: 24px; font-style: italic; margin-bottom: 20px; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .testi-name { font-weight: 600; font-size: 14px; color: var(--navy); }
+  .testi-role { font-size: 12px; color: var(--gray-400); }
+  .stars { color: var(--gold); font-size: 13px; margin-bottom: 4px; }
+
+  /* KM SECTION */
+  #km { background: var(--navy); }
+  #km .section-title { color: var(--white); }
+  #km .section-desc { color: rgba(255,255,255,0.55); }
+  #km .section-tag { color: var(--gold-light); }
+  #km .section-tag::before { background: var(--gold-light); }
+  .km-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .km-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background var(--transition);
+  }
+  .km-card:hover { background: rgba(201,162,39,0.08); border-color: rgba(201,162,39,0.2); }
+  .km-step { font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .km-card h3 { font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+  .km-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+  .km-icon {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 40px;
+    opacity: 0.12;
+  }
+  .km-bullets { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .km-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+  .km-bullets li::before { content: '▹'; color: var(--gold); flex-shrink: 0; }
+
+  /* PURPOSE */
+  #purpose { background: var(--gray-100); }
+  .purpose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .purpose-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+  .purpose-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--navy);
+    font-weight: 500;
+    transition: border-color var(--transition);
+  }
+  .purpose-list li:hover { border-color: var(--gold); }
+  .purpose-list li .num {
+    width: 28px; height: 28px;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .purpose-visual {
+    background: var(--navy);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    color: var(--white);
+  }
+  .purpose-visual h3 { font-size: 22px; color: var(--gold-light); margin-bottom: 20px; }
+  .purpose-stat { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .purpose-stat:last-child { border-bottom: none; }
+  .purpose-stat-label { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .purpose-stat-val { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold-light); font-weight: 700; }
+
+  /* GALLERY */
+  #gallery { background: var(--white); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .gallery-item {
+    background: var(--gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+    transition: transform var(--transition);
+  }
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item:nth-child(4) { grid-column: span 2; }
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--gray-400);
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--gray-100);
+    border: 2px dashed var(--gray-200);
+    border-radius: var(--radius);
+    transition: border-color var(--transition);
+    padding: 20px;
+    text-align: center;
+  }
+  .gallery-placeholder:hover { border-color: var(--gold); color: var(--gold); }
+  .gallery-placeholder .gal-icon { font-size: 32px; opacity: 0.4; }
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,22,40,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition);
+    border-radius: var(--radius);
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span { color: var(--white); font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+  .gallery-upload-btn {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 7px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--gray-100); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  .contact-form-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    box-shadow: var(--shadow);
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 9px;
+    padding: 11px 16px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--gray-100);
+    transition: border-color var(--transition);
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); background: var(--white); }
+  .form-group textarea { height: 110px; resize: vertical; }
+  .contact-info { padding-top: 8px; }
+  .contact-info h3 { font-size: 22px; color: var(--navy); margin-bottom: 8px; }
+  .contact-info p { color: var(--gray-600); font-size: 14px; margin-bottom: 28px; }
+  .contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .contact-detail-icon {
+    width: 40px; height: 40px;
+    background: var(--navy);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .contact-detail strong { display: block; font-size: 13px; color: var(--navy); font-weight: 600; }
+  .contact-detail span { font-size: 13px; color: var(--gray-600); }
+  .social-links { display: flex; gap: 10px; margin-top: 24px; }
+  .social-btn {
+    width: 40px; height: 40px;
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition);
+  }
+  .social-btn:hover { background: var(--navy-light); }
+  .map-placeholder {
+    background: var(--gray-200);
+    border-radius: var(--radius-lg);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-400);
+    font-size: 14px;
+    margin-top: 24px;
+    border: 2px dashed var(--gray-200);
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
+    padding: 64px 24px 32px;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand { }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .footer-logo-badge {
+    width: 40px; height: 40px;
+    background: var(--gold);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--navy);
+    font-family: 'Playfair Display', serif;
+  }
+  .footer-logo-text { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--white); font-weight: 700; line-height: 1.2; }
+  .footer-logo-sub { font-size: 11px; color: rgba(255,255,255,0.4); }
+  .footer-desc { font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-col h4 { color: var(--white); font-size: 14px; font-weight: 600; margin-bottom: 16px; font-family: 'DM Sans', sans-serif; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: color var(--transition); }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-bottom-links { display: flex; gap: 20px; }
+  .footer-bottom-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color var(--transition); }
+  .footer-bottom-links a:hover { color: var(--gold-light); }
+
+  /* EDIT MODAL */
+  .edit-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .edit-modal.active { display: flex; }
+  .modal-box {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: var(--shadow-lg);
+  }
+  .modal-box h3 { font-size: 18px; color: var(--navy); margin-bottom: 16px; }
+  .modal-box textarea {
+    width: 100%;
+    height: 120px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 9px;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    resize: vertical;
+    outline: none;
+  }
+  .modal-box textarea:focus { border-color: var(--gold); }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+  .modal-cancel {
+    background: var(--gray-100);
+    color: var(--gray-600);
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .modal-save {
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .modal-save:hover { background: var(--navy-light); }
+
+  /* NOTIFICATION */
+  .notify {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: var(--gold-light);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 10000;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: transform 0.4s, opacity 0.4s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .notify.show { transform: translateY(0); opacity: 1; }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* SMOOTH SCROLL */
+  html { scroll-behavior: smooth; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-cards-grid { grid-template-columns: 1fr 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-grid, .purpose-grid, .contact-grid { grid-template-columns: 1fr; }
+    .km-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:nth-child(4) { grid-column: span 1; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    section { padding: 56px 16px; }
+    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: 1fr; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .careers-grid { grid-template-columns: 1fr 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; }
+    .about-highlights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ADMIN BANNER -->
+<div id="admin-banner">
+  <div class="admin-left">
+    <span>⚙ Admin Mode</span>
+    <span style="font-weight:400; font-size:12px; opacity:0.7">Hover over any section to see Edit buttons</span>
+  </div>
+  <button class="admin-toggle" onclick="toggleAdmin()">Hide Edit Buttons</button>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-badge">DEA</div>
+      <div>
+        <div class="logo-text">Digital Entrepreneur Academy</div>
+        <div class="logo-sub">@ KLUST</div>
+      </div>
+    </a>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#careers">Careers</a></li>
+      <li><a href="#km">KM</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#contact" class="nav-cta">Apply Now →</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleNav()" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="editable-block">
+      <button class="edit-btn" onclick="openEdit('hero-main', 'Hero Content')">✏ Edit</button>
+      <div class="hero-badge">KLUST | Kuala Lumpur University of Science and Technology</div>
+      <h1 class="hero-title" id="hero-main">
+        Digital Entrepreneur<br>
+        Academy<br>
+        <span class="gold">@ KLUST</span>
+      </h1>
+      <p class="hero-sub" id="hero-sub">Shaping Future Digital Business Leaders</p>
+      <p class="hero-desc" id="hero-desc">Empowering the next generation of entrepreneurs and digital business innovators. Join a dynamic programme that blends technology, business strategy, and startup thinking to prepare you for tomorrow's economy.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Apply Now →</a>
+        <a href="#courses" class="btn-outline">Explore Programme</a>
+        <a href="#about" class="btn-outline">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-visual editable-block">
+      <button class="edit-btn" onclick="openEdit('stat-students', 'Student Count')">✏ Edit</button>
+      <div class="hero-card">
+        <div class="hero-card-label">Programme Highlight</div>
+        <div class="hero-card-value">MGMT 3501</div>
+        <div class="hero-card-desc">Knowledge Management — Core Subject</div>
+      </div>
+      <div class="hero-cards-grid">
+        <div class="hero-card">
+          <div class="hero-card-label">Students</div>
+          <div class="hero-card-value" id="stat-students">500+</div>
+          <div class="hero-card-desc">Enrolled learners</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">Courses</div>
+          <div class="hero-card-value" id="stat-courses">12+</div>
+          <div class="hero-card-desc">Core modules</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">Graduates</div>
+          <div class="hero-card-value" id="stat-graduates">200+</div>
+          <div class="hero-card-desc">Industry-ready</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">Startups</div>
+          <div class="hero-card-value" id="stat-startups">30+</div>
+          <div class="hero-card-desc">Founded by alumni</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item editable-block">
+      <button class="edit-btn" onclick="openEdit('s1', 'Students Statistic')">✏ Edit</button>
+      <span class="stat-number" id="s1" data-target="500">0</span>
+      <div class="stat-label">Students Enrolled</div>
+    </div>
+    <div class="stat-item editable-block">
+      <button class="edit-btn" onclick="openEdit('s2', 'Startups Statistic')">✏ Edit</button>
+      <span class="stat-number" id="s2" data-target="30">0</span>
+      <div class="stat-label">Startups Founded</div>
+    </div>
+    <div class="stat-item editable-block">
+      <button class="edit-btn" onclick="openEdit('s3', 'Graduates Statistic')">✏ Edit</button>
+      <span class="stat-number" id="s3" data-target="200">0</span>
+      <div class="stat-label">Graduates</div>
+    </div>
+    <div class="stat-item editable-block">
+      <button class="edit-btn" onclick="openEdit('s4', 'Courses Statistic')">✏ Edit</button>
+      <span class="stat-number" id="s4" data-target="12">0</span>
+      <div class="stat-label">Core Modules</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('about-text', 'About Programme Text')">✏ Edit</button>
+        <div class="section-tag">About the Programme</div>
+        <h2 class="section-title" id="about-title">A Programme Designed for the Digital Age</h2>
+        <p class="section-desc" style="margin-bottom:24px" id="about-text">The Digital Entrepreneur Academy at KLUST focuses on entrepreneurship, digital business, innovation, business information systems, digital marketing, e-commerce, and startup development. We prepare graduates to lead and innovate in an increasingly digital economy.</p>
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon">💼</div>Business Management
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">📱</div>Digital Marketing
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🛒</div>Online Business Dev
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">📊</div>Data-Driven Decisions
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">💡</div>Innovation & Startups
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-icon">🔧</div>Tech Integration
+          </div>
+        </div>
+      </div>
+      <div class="about-visual fade-up editable-block">
+        <button class="edit-btn" onclick="openEdit('about-pills', 'Programme Areas')">✏ Edit</button>
+        <div class="about-visual-title">Programme Focus Areas</div>
+        <div>
+          <span class="programme-pill"><span class="dot"></span>Entrepreneurship</span>
+          <span class="programme-pill"><span class="dot"></span>Digital Marketing</span>
+          <span class="programme-pill"><span class="dot"></span>E-Commerce</span>
+          <span class="programme-pill"><span class="dot"></span>Business Info Systems</span>
+          <span class="programme-pill"><span class="dot"></span>Social Media</span>
+          <span class="programme-pill"><span class="dot"></span>Innovation Mgmt</span>
+          <span class="programme-pill"><span class="dot"></span>Startup Development</span>
+          <span class="programme-pill"><span class="dot"></span>Business Analytics</span>
+          <span class="programme-pill"><span class="dot"></span>Knowledge Management</span>
+          <span class="programme-pill"><span class="dot"></span>Digital Leadership</span>
+          <span class="programme-pill"><span class="dot"></span>Tech Integration</span>
+        </div>
+        <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--gray-200);">
+          <div style="font-size:13px; color:var(--gray-400); font-weight:600; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px;">Lecturer</div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:48px;height:48px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;font-size:16px;">SS</div>
+            <div>
+              <div style="font-weight:600;font-size:15px;color:var(--navy);">Mdm Suhaila Sard</div>
+              <div style="font-size:13px;color:var(--gray-400);">Course: MGMT 3501 – Knowledge Management</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section id="why">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Why Choose Us</div>
+    <h2 class="section-title fade-up">Built for Future-Ready Leaders</h2>
+    <p class="section-desc fade-up">Eight compelling reasons why the Digital Entrepreneur Academy at KLUST is the right choice for your entrepreneurial journey.</p>
+    <div class="why-grid" id="why-grid">
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why1-title', 'Why Card 1')">✏ Edit</button>
+        <div class="why-icon">🎯</div>
+        <h3 id="why1-title">Industry-Relevant Curriculum</h3>
+        <p id="why1-desc">Courses aligned with current digital business trends and employer expectations, updated regularly with industry input.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why2-title', 'Why Card 2')">✏ Edit</button>
+        <div class="why-icon">🛠</div>
+        <h3 id="why2-title">Hands-On Learning</h3>
+        <p id="why2-desc">Real projects, business simulations, and startup challenges that give you practical experience from day one.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why3-title', 'Why Card 3')">✏ Edit</button>
+        <div class="why-icon">💻</div>
+        <h3 id="why3-title">Digital Business Skills</h3>
+        <p id="why3-desc">Gain mastery in e-commerce, digital marketing, analytics, and the tools that power modern online businesses.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why4-title', 'Why Card 4')">✏ Edit</button>
+        <div class="why-icon">🚀</div>
+        <h3 id="why4-title">Entrepreneurship Training</h3>
+        <p id="why4-desc">Learn to ideate, validate, and launch your own venture with mentorship from experienced entrepreneurs.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why5-title', 'Why Card 5')">✏ Edit</button>
+        <div class="why-icon">👩‍🏫</div>
+        <h3 id="why5-title">Experienced Lecturers</h3>
+        <p id="why5-desc">Learn from academics and industry professionals who bring both theoretical depth and real-world expertise.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why6-title', 'Why Card 6')">✏ Edit</button>
+        <div class="why-icon">🏆</div>
+        <h3 id="why6-title">Career-Ready Graduates</h3>
+        <p id="why6-desc">Our graduates enter the workforce with the skills, confidence, and network to succeed immediately.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why7-title', 'Why Card 7')">✏ Edit</button>
+        <div class="why-icon">💡</div>
+        <h3 id="why7-title">Innovation & Startup Opportunities</h3>
+        <p id="why7-desc">Access to startup incubators, pitch competitions, and innovation labs to turn your ideas into reality.</p>
+      </div>
+      <div class="why-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('why8-title', 'Why Card 8')">✏ Edit</button>
+        <div class="why-icon">🌐</div>
+        <h3 id="why8-title">Modern Learning Environment</h3>
+        <p id="why8-desc">State-of-the-art facilities, digital tools, and flexible online-offline hybrid learning for today's student lifestyle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Course Structure</div>
+    <h2 class="section-title fade-up">Core Modules & Subjects</h2>
+    <p class="section-desc fade-up">A carefully designed curriculum covering every dimension of digital entrepreneurship and business innovation.</p>
+    <div class="courses-grid" id="courses-grid">
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c1-name', 'Course 1')">✏ Edit</button>
+        <div class="course-num">MODULE 01</div>
+        <h3 id="c1-name">Introduction to Entrepreneurship</h3>
+        <p id="c1-desc">Foundations of entrepreneurial thinking, opportunity recognition, and the startup mindset.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c2-name', 'Course 2')">✏ Edit</button>
+        <div class="course-num">MODULE 02</div>
+        <h3 id="c2-name">Digital Marketing</h3>
+        <p id="c2-desc">SEO, SEM, content marketing, and data-driven campaign management across platforms.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c3-name', 'Course 3')">✏ Edit</button>
+        <div class="course-num">MODULE 03</div>
+        <h3 id="c3-name">E-Commerce</h3>
+        <p id="c3-desc">Building, running, and optimising online stores, payment systems, and customer journeys.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c4-name', 'Course 4')">✏ Edit</button>
+        <div class="course-num">MODULE 04</div>
+        <h3 id="c4-name">Business Information Systems</h3>
+        <p id="c4-desc">Enterprise software, data management, and information architecture for digital businesses.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c5-name', 'Course 5')">✏ Edit</button>
+        <div class="course-num">MODULE 05</div>
+        <h3 id="c5-name">Social Media Marketing</h3>
+        <p id="c5-desc">Audience engagement, influencer strategies, and platform-specific content creation.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c6-name', 'Course 6')">✏ Edit</button>
+        <div class="course-num">MODULE 06</div>
+        <h3 id="c6-name">Innovation Management</h3>
+        <p id="c6-desc">Design thinking, creative problem solving, and managing innovation processes in organisations.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c7-name', 'Course 7')">✏ Edit</button>
+        <div class="course-num">MODULE 07</div>
+        <h3 id="c7-name">Startup Development</h3>
+        <p id="c7-desc">Lean startup methodology, MVP creation, funding, and scaling a new venture.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c8-name', 'Course 8')">✏ Edit</button>
+        <div class="course-num">MODULE 08</div>
+        <h3 id="c8-name">Business Analytics</h3>
+        <p id="c8-desc">Using data, metrics, and analytics tools to make smarter business decisions.</p>
+      </div>
+      <div class="course-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('c9-name', 'Course 9')">✏ Edit</button>
+        <div class="course-num">MODULE 09</div>
+        <h3 id="c9-name">Knowledge Management</h3>
+        <p id="c9-desc">KM processes, knowledge workers, organisational learning, and knowledge systems. (MGMT 3501)</p>
+      </div>
+    </div>
+    <div class="course-actions">
+      <button class="btn-gold-sm" onclick="addCourse()">+ Add Module</button>
+      <button class="btn-ghost-sm" onclick="openEdit('courses-section', 'Course Section')">✏ Edit Section</button>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section id="careers">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Career Opportunities</div>
+    <h2 class="section-title fade-up">Where Will You Go?</h2>
+    <p class="section-desc fade-up">Our graduates pursue diverse, high-demand careers across the digital economy and entrepreneurship ecosystem.</p>
+    <div class="careers-grid" id="careers-grid">
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car1', 'Career Card 1')">✏ Edit</button>
+        <div class="career-icon">🧑‍💼</div>
+        <h3 id="car1">Entrepreneur</h3>
+        <p>Found and lead your own digital business venture</p>
+        <span class="career-tag">High Demand</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car2', 'Career Card 2')">✏ Edit</button>
+        <div class="career-icon">📣</div>
+        <h3 id="car2">Digital Marketer</h3>
+        <p>Drive growth through data-led marketing strategies</p>
+        <span class="career-tag">High Demand</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car3', 'Career Card 3')">✏ Edit</button>
+        <div class="career-icon">📈</div>
+        <h3 id="car3">Business Analyst</h3>
+        <p>Turn data into actionable insights for organisations</p>
+        <span class="career-tag">Growing</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car4', 'Career Card 4')">✏ Edit</button>
+        <div class="career-icon">🛍</div>
+        <h3 id="car4">E-Commerce Specialist</h3>
+        <p>Build and optimise online retail and marketplace operations</p>
+        <span class="career-tag">High Demand</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car5', 'Career Card 5')">✏ Edit</button>
+        <div class="career-icon">🌱</div>
+        <h3 id="car5">Startup Founder</h3>
+        <p>Create innovative solutions and disrupt industries</p>
+        <span class="career-tag">Aspirational</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car6', 'Career Card 6')">✏ Edit</button>
+        <div class="career-icon">💡</div>
+        <h3 id="car6">Marketing Executive</h3>
+        <p>Lead campaigns and brand strategies for top companies</p>
+        <span class="career-tag">Stable</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car7', 'Career Card 7')">✏ Edit</button>
+        <div class="career-icon">📲</div>
+        <h3 id="car7">Social Media Strategist</h3>
+        <p>Build communities and manage digital brand presence</p>
+        <span class="career-tag">Growing</span>
+      </div>
+      <div class="career-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('car8', 'Career Card 8')">✏ Edit</button>
+        <div class="career-icon">🤝</div>
+        <h3 id="car8">Business Consultant</h3>
+        <p>Advise organisations on digital transformation and strategy</p>
+        <span class="career-tag">Premium</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Student Experience</div>
+    <h2 class="section-title fade-up">Stories from Our Students</h2>
+    <p class="section-desc fade-up">Hear from those who've walked the path and built their futures here at the Digital Entrepreneur Academy.</p>
+    <div class="testi-grid" id="testi-grid">
+      <div class="testi-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('t1-text', 'Testimonial 1')">✏ Edit</button>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text" id="t1-text">"The programme completely changed how I think about business. Within a year of graduating, I launched my own e-commerce brand generating consistent monthly revenue. The curriculum is incredibly practical and forward-thinking."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AF</div>
+          <div>
+            <div class="testi-name" id="t1-name">Ahmad Faris</div>
+            <div class="testi-role">E-Commerce Founder, Batch 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('t2-text', 'Testimonial 2')">✏ Edit</button>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text" id="t2-text">"The Knowledge Management course gave me a completely new framework for thinking about how organisations capture and use information. My internship employer said I was miles ahead of other fresh graduates."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">NR</div>
+          <div>
+            <div class="testi-name" id="t2-name">Nurul Rashidah</div>
+            <div class="testi-role">Business Analyst, Batch 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('t3-text', 'Testimonial 3')">✏ Edit</button>
+        <div class="stars">★★★★★</div>
+        <p class="testi-text" id="t3-text">"I came in as a diploma student with no business background. The supportive lecturers and hands-on projects made the learning curve manageable and exciting. I now run digital marketing for a leading tech firm."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SM</div>
+          <div>
+            <div class="testi-name" id="t3-name">Sayidomar Mohamed</div>
+            <div class="testi-role">Digital Marketing Lead, Batch 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KM SECTION -->
+<section id="km">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Knowledge Management</div>
+    <h2 class="section-title fade-up">How We Apply KM Processes</h2>
+    <p class="section-desc fade-up">The Digital Entrepreneur Academy embeds Knowledge Management principles — discovery, capture, sharing, and application — throughout every aspect of learning and innovation.</p>
+    <div class="km-grid">
+      <div class="km-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('km1-text', 'KM Discovery')">✏ Edit</button>
+        <div class="km-icon">🔍</div>
+        <div class="km-step">KM Process 01</div>
+        <h3>Knowledge Discovery</h3>
+        <p id="km1-text">Students and lecturers continuously research emerging trends, academic literature, and industry developments to uncover new knowledge that strengthens the programme.</p>
+        <ul class="km-bullets">
+          <li>Research and information gathering from multiple sources</li>
+          <li>Identifying gaps in existing knowledge and practice</li>
+          <li>Exploring new digital business models and technologies</li>
+        </ul>
+      </div>
+      <div class="km-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('km2-text', 'KM Capture')">✏ Edit</button>
+        <div class="km-icon">📋</div>
+        <div class="km-step">KM Process 02</div>
+        <h3>Knowledge Capture</h3>
+        <p id="km2-text">All learning, insights, and discoveries are systematically documented through lecture materials, student portfolios, and digital repositories — turning tacit knowledge into explicit, reusable assets.</p>
+        <ul class="km-bullets">
+          <li>Organising and documenting course knowledge</li>
+          <li>Creating student project portfolios and case studies</li>
+          <li>Using LMS platforms like Moodle and Google Classroom</li>
+        </ul>
+      </div>
+      <div class="km-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('km3-text', 'KM Sharing')">✏ Edit</button>
+        <div class="km-icon">🤝</div>
+        <div class="km-step">KM Process 03</div>
+        <h3>Knowledge Sharing</h3>
+        <p id="km3-text">Through collaborative projects, peer learning, and open academic discussions, students and lecturers exchange ideas that multiply the value of individual knowledge across the entire community.</p>
+        <ul class="km-bullets">
+          <li>Sharing ideas with classmates and lecturers in group work</li>
+          <li>Presentations, seminars, and academic discussions</li>
+          <li>Digital collaboration via Teams, Zoom, and shared platforms</li>
+        </ul>
+      </div>
+      <div class="km-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('km4-text', 'KM Application')">✏ Edit</button>
+        <div class="km-icon">⚡</div>
+        <div class="km-step">KM Process 04</div>
+        <h3>Knowledge Application</h3>
+        <p id="km4-text">Acquired knowledge is applied directly to real business challenges — from building this very website as a KM final assessment to launching student startups and consulting projects in the market.</p>
+        <ul class="km-bullets">
+          <li>Applying knowledge to build the website and improve learning</li>
+          <li>Using insights to develop business plans and startup pitches</li>
+          <li>Continuous improvement through feedback and reflection</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PURPOSE -->
+<section id="purpose">
+  <div class="section-inner">
+    <div class="purpose-grid">
+      <div class="editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('purpose-text', 'Website Purpose')">✏ Edit</button>
+        <div class="section-tag">Website Purpose</div>
+        <h2 class="section-title">Why This Website Exists</h2>
+        <p style="color:var(--gray-600); font-size:15px; line-height:1.7; margin-bottom:0" id="purpose-text">This website was created as a KM Final Assessment for MGMT 3501 — Knowledge Management at KLUST. It demonstrates how digital platforms can be used to organise, share, and apply knowledge in an educational context.</p>
+        <ul class="purpose-list">
+          <li><span class="num">01</span>Help students understand entrepreneurship education at KLUST</li>
+          <li><span class="num">02</span>Learn about digital business opportunities and career paths</li>
+          <li><span class="num">03</span>Explore programme information clearly and accessibly</li>
+          <li><span class="num">04</span>Prepare prospective students for future careers</li>
+          <li><span class="num">05</span>Demonstrate KM processes through real digital application</li>
+        </ul>
+      </div>
+      <div class="purpose-visual fade-up editable-block">
+        <button class="edit-btn" onclick="openEdit('purpose-stats', 'Purpose Stats')">✏ Edit</button>
+        <h3>Programme at a Glance</h3>
+        <div class="purpose-stat">
+          <span class="purpose-stat-label">Target Audience</span>
+          <span class="purpose-stat-val" style="font-size:14px; font-family:'DM Sans',sans-serif; font-weight:600;">SPM & Diploma Leavers</span>
+        </div>
+        <div class="purpose-stat">
+          <span class="purpose-stat-label">Study Mode</span>
+          <span class="purpose-stat-val" style="font-size:14px; font-family:'DM Sans',sans-serif; font-weight:600;">Full-time & Part-time</span>
+        </div>
+        <div class="purpose-stat">
+          <span class="purpose-stat-label">Programme Level</span>
+          <span class="purpose-stat-val" style="font-size:14px; font-family:'DM Sans',sans-serif; font-weight:600;">Bachelor's Degree</span>
+        </div>
+        <div class="purpose-stat">
+          <span class="purpose-stat-label">Duration</span>
+          <span class="purpose-stat-val">3 Years</span>
+        </div>
+        <div class="purpose-stat">
+          <span class="purpose-stat-label">Core Subject</span>
+          <span class="purpose-stat-val" style="font-size:13px; font-family:'DM Sans',sans-serif; font-weight:600;">MGMT 3501 – KM</span>
+        </div>
+        <div class="purpose-stat">
+          <span class="purpose-stat-label">Institution</span>
+          <span class="purpose-stat-val" style="font-size:13px; font-family:'DM Sans',sans-serif; font-weight:600;">KLUST</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Gallery</div>
+    <h2 class="section-title fade-up">Life at the Academy</h2>
+    <p class="section-desc fade-up">Glimpses of collaboration, innovation, and digital entrepreneurship in action across our campus and virtual spaces.</p>
+    <div class="gallery-grid" id="gallery-grid">
+      <div class="gallery-item editable-block">
+        <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+        <div class="gallery-placeholder">
+          <div class="gal-icon">💻</div>
+          <strong>Digital Business Hub</strong>
+          <span>Students collaborating on tech projects</span>
+          <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+        </div>
+      </div>
+      <div class="gallery-item editable-block">
+        <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+        <div class="gallery-placeholder">
+          <div class="gal-icon">🚀</div>
+          <strong>Startup Pitch Day</strong>
+          <span>Students presenting business ideas to investors</span>
+          <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+        </div>
+      </div>
+      <div class="gallery-item editable-block">
+        <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+        <div class="gallery-placeholder">
+          <div class="gal-icon">🌐</div>
+          <strong>Innovation Lab</strong>
+          <span>Exploring emerging digital technologies</span>
+          <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+        </div>
+      </div>
+      <div class="gallery-item editable-block">
+        <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+        <div class="gallery-placeholder">
+          <div class="gal-icon">🎓</div>
+          <strong>Graduation & Success</strong>
+          <span>Celebrating career-ready digital business leaders</span>
+          <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+        </div>
+      </div>
+      <div class="gallery-item editable-block">
+        <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+        <div class="gallery-placeholder">
+          <div class="gal-icon">🤝</div>
+          <strong>Team Collaboration</strong>
+          <span>Cross-disciplinary teamwork in action</span>
+          <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+        </div>
+      </div>
+      <div class="gallery-item editable-block">
+        <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+        <div class="gallery-placeholder">
+          <div class="gal-icon">📊</div>
+          <strong>E-Commerce Workshop</strong>
+          <span>Hands-on online business building sessions</span>
+          <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:24px; text-align:center;">
+      <button class="btn-primary" style="background:var(--navy); color:var(--gold);" onclick="addGalleryItem()">+ Add Photo</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Contact & Apply</div>
+    <h2 class="section-title fade-up">Get in Touch</h2>
+    <p class="section-desc fade-up">Ready to start your digital entrepreneurship journey? Reach out to us and we'll guide you through every step of the application process.</p>
+    <div class="contact-grid">
+      <div class="contact-form-card editable-block fade-up">
+        <button class="edit-btn" onclick="openEdit('contact-form', 'Contact Form')">✏ Edit</button>
+        <h3 style="font-size:18px; color:var(--navy); margin-bottom:20px;">Send Us a Message</h3>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="e.g. Ahmad Faris bin Abdullah">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="yourname@email.com">
+        </div>
+        <div class="form-group">
+          <label>I am a...</label>
+          <select>
+            <option>SPM Leaver</option>
+            <option>Diploma Student/Graduate</option>
+            <option>Working Adult</option>
+            <option>Parent</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us what you'd like to know about the programme..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%; justify-content:center;" onclick="submitForm()">Send Message →</button>
+      </div>
+      <div class="contact-info fade-up editable-block">
+        <button class="edit-btn" onclick="openEdit('contact-info', 'Contact Info')">✏ Edit</button>
+        <h3>Contact Information</h3>
+        <p>We're here to help you make the best decision for your future. Don't hesitate to reach out.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div>
+            <strong>Address</strong>
+            <span id="contact-address">Kuala Lumpur University of Science and Technology (KLUST)<br>Jalan Ikram-Uniten, 43000 Kajang, Selangor, Malaysia</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📧</div>
+          <div>
+            <strong>Email</strong>
+            <span id="contact-email">enquiry@klust.edu.my</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div>
+            <strong>Phone</strong>
+            <span id="contact-phone">+603-8926 4000</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">⏰</div>
+          <div>
+            <strong>Office Hours</strong>
+            <span>Monday – Friday, 8:30 AM – 5:00 PM</span>
+          </div>
+        </div>
+        <div class="social-links">
+          <a class="social-btn" href="#" title="Facebook">f</a>
+          <a class="social-btn" href="#" title="Instagram" style="font-style:italic;">in</a>
+          <a class="social-btn" href="#" title="Twitter/X">✕</a>
+          <a class="social-btn" href="#" title="LinkedIn" style="font-size:12px; font-weight:700;">LI</a>
+          <a class="social-btn" href="#" title="YouTube" style="font-size:12px;">▶</a>
+        </div>
+        <div class="map-placeholder">
+          <div style="font-size:24px;">📍</div>
+          <strong>KLUST Campus Map</strong>
+          <span style="font-size:12px; opacity:0.7;">Jalan Ikram-Uniten, Kajang, Selangor</span>
+          <button class="btn-primary" style="margin-top:8px; font-size:12px; padding:8px 16px;" onclick="showNotify('Map link updated!')">📍 Set Map Location</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top editable-block">
+      <button class="edit-btn" onclick="openEdit('footer-desc', 'Footer Brand Text')">✏ Edit</button>
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-badge">DEA</div>
+          <div>
+            <div class="footer-logo-text">Digital Entrepreneur Academy</div>
+            <div class="footer-logo-sub">@ KLUST</div>
+          </div>
+        </div>
+        <p class="footer-desc" id="footer-desc">Shaping Future Digital Business Leaders at Kuala Lumpur University of Science and Technology. Empowering the next generation of entrepreneurs and innovators.</p>
+        <div class="social-links">
+          <a class="social-btn" href="#" title="Facebook">f</a>
+          <a class="social-btn" href="#" title="Instagram" style="font-style:italic;">in</a>
+          <a class="social-btn" href="#" title="Twitter/X">✕</a>
+          <a class="social-btn" href="#" title="LinkedIn" style="font-size:12px; font-weight:700;">LI</a>
+        </div>
+      </div>
+      <div class="footer-col editable-block">
+        <button class="edit-btn" onclick="openEdit('footer-quick', 'Quick Links')">✏ Edit</button>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#about">About Programme</a></li>
+          <li><a href="#why">Why Choose Us</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#careers">Careers</a></li>
+          <li><a href="#km">KM Processes</a></li>
+          <li><a href="#contact">Apply Now</a></li>
+        </ul>
+      </div>
+      <div class="footer-col editable-block">
+        <button class="edit-btn" onclick="openEdit('footer-prog', 'Programme Links')">✏ Edit</button>
+        <h4>Programme</h4>
+        <ul class="footer-links">
+          <li><a href="#courses">Course Structure</a></li>
+          <li><a href="#testimonials">Student Stories</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#">Admission Guide</a></li>
+          <li><a href="#">Fee Structure</a></li>
+          <li><a href="#">Scholarships</a></li>
+        </ul>
+      </div>
+      <div class="footer-col editable-block">
+        <button class="edit-btn" onclick="openEdit('footer-contact', 'Footer Contact')">✏ Edit</button>
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a href="#">enquiry@klust.edu.my</a></li>
+          <li><a href="#">+603-8926 4000</a></li>
+          <li><a href="#">Kajang, Selangor</a></li>
+          <li><a href="#">Mon–Fri 8:30–5:00</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Digital Entrepreneur Academy @ KLUST. All rights reserved.</div>
+      <div>
+        <span style="opacity:0.5; font-size:11px;">Prepared by: Sayidomar Abdinor Mohamed | ID: 231923940 | MGMT 3501</span>
+      </div>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- EDIT MODAL -->
+<div class="edit-modal" id="edit-modal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <h3 id="modal-title">Edit Content</h3>
+    <textarea id="modal-textarea" placeholder="Enter new content here..."></textarea>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-save" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notify" id="notify">✓ Content saved successfully!</div>
+
+<script>
+  // ADMIN TOGGLE
+  let adminOn = true;
+  function toggleAdmin() {
+    adminOn = !adminOn;
+    document.body.classList.toggle('admin-off', !adminOn);
+    document.querySelector('.admin-toggle').textContent = adminOn ? 'Hide Edit Buttons' : 'Show Edit Buttons';
+  }
+
+  // HAMBURGER NAV
+  function toggleNav() {
+    const menu = document.getElementById('nav-menu');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    if (menu.style.display === 'flex') {
+      menu.style.flexDirection = 'column';
+      menu.style.position = 'absolute';
+      menu.style.top = '64px';
+      menu.style.left = '0';
+      menu.style.right = '0';
+      menu.style.background = '#fff';
+      menu.style.padding = '16px 24px';
+      menu.style.borderBottom = '1px solid #e8ecf4';
+      menu.style.zIndex = '999';
+      menu.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)';
+    }
+  }
+
+  // MODAL EDITING
+  let currentEditId = null;
+  function openEdit(id, title) {
+    currentEditId = id;
+    const el = document.getElementById(id);
+    if (!el) { showNotify('Edit ID not found: ' + id); return; }
+    document.getElementById('modal-title').textContent = 'Edit: ' + title;
+    document.getElementById('modal-textarea').value = el.innerText || el.textContent;
+    document.getElementById('edit-modal').classList.add('active');
+  }
+  function closeModal() {
+    document.getElementById('edit-modal').classList.remove('active');
+    currentEditId = null;
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('edit-modal')) closeModal();
+  }
+  function saveEdit() {
+    if (!currentEditId) return;
+    const el = document.getElementById(currentEditId);
+    if (el) {
+      el.textContent = document.getElementById('modal-textarea').value;
+    }
+    closeModal();
+    showNotify('✓ Content saved successfully!');
+  }
+
+  // NOTIFICATION
+  function showNotify(msg) {
+    const n = document.getElementById('notify');
+    n.textContent = msg || '✓ Done!';
+    n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 2800);
+  }
+
+  // COUNTER ANIMATION
+  function animateCounters() {
+    document.querySelectorAll('.stat-number[data-target]').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      const dur = 2000;
+      const step = target / (dur / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current) + '+';
+        if (current >= target) clearInterval(timer);
+      }, 16);
+    });
+  }
+
+  // SCROLL ANIMATIONS
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Trigger counter on stats section visible
+  const statsObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      animateCounters();
+      statsObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+  statsObserver.observe(document.getElementById('stats'));
+
+  // ADD COURSE
+  let courseCount = 9;
+  function addCourse() {
+    courseCount++;
+    const grid = document.getElementById('courses-grid');
+    const card = document.createElement('div');
+    card.className = 'course-card editable-block fade-up';
+    const id = 'c' + courseCount;
+    card.innerHTML = `
+      <button class="edit-btn" onclick="openEdit('${id}-name','Course ${courseCount}')">✏ Edit</button>
+      <div class="course-num">MODULE ${String(courseCount).padStart(2,'0')}</div>
+      <h3 id="${id}-name">New Module</h3>
+      <p id="${id}-desc">Click the edit button to update this module description.</p>
+    `;
+    grid.appendChild(card);
+    setTimeout(() => card.classList.add('visible'), 50);
+    observer.observe(card);
+    showNotify('✓ New module added!');
+  }
+
+  // ADD GALLERY ITEM
+  function addGalleryItem() {
+    const grid = document.getElementById('gallery-grid');
+    const item = document.createElement('div');
+    item.className = 'gallery-item editable-block';
+    item.innerHTML = `
+      <button class="edit-btn" onclick="uploadImage(this)">📷 Change Image</button>
+      <div class="gallery-placeholder">
+        <div class="gal-icon">🖼</div>
+        <strong>New Gallery Image</strong>
+        <span>Click to upload an image</span>
+        <button class="gallery-upload-btn" onclick="uploadImage(this)">Upload Image</button>
+      </div>
+    `;
+    grid.appendChild(item);
+    showNotify('✓ Gallery slot added!');
+  }
+
+  // IMAGE UPLOAD
+  function uploadImage(btn) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const item = btn.closest('.gallery-item');
+        item.style.backgroundImage = `url(${ev.target.result})`;
+        item.style.backgroundSize = 'cover';
+        item.style.backgroundPosition = 'center';
+        const placeholder = item.querySelector('.gallery-placeholder');
+        if (placeholder) placeholder.style.display = 'none';
+        showNotify('✓ Image uploaded!');
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }
+
+  // FORM SUBMIT
+  function submitForm() {
+    showNotify('✓ Message sent! We\'ll be in touch soon.');
+  }
+
+  // SMOOTH NAV LINK BEHAVIOR
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      const menu = document.getElementById('nav-menu');
+      if (window.innerWidth <= 640) menu.style.display = 'none';
+    });
+  });
+
+  // STAGGER FADE-UPS
+  document.querySelectorAll('.why-card, .course-card, .career-card, .testi-card, .km-card').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.08 + 's';
+  });
+</script>
+</body>
+</html>
